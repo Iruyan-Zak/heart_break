@@ -1,5 +1,5 @@
 ClientArea clientArea = new ClientArea(30, 30, 360, 540);
-Controller controller = new Controller(new char[]{'w', 'a', 's', 'd'});
+Controller controller = new Controller(new char[]{'W', 'A', 'S', 'D', SHIFT});
 
 // ----- クラス定義 -----
 

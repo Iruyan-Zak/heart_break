@@ -1,21 +1,21 @@
 void controllerTest(){
-  Controller controller = new Controller(new char[]{'w', 'a', 's', 'd', SHIFT});
+  Controller controller = new Controller(new char[]{'W', 'A', 'S', 'D', SHIFT});
   
-  controller.press('w');
+  controller.press('W');
   controller.press(SHIFT);
   controller.lockInput();
 
-  assert controller.down('w')
+  assert controller.down('W')
       && controller.pressed(SHIFT)
-      && !controller.down('s')
+      && !controller.down('S')
       : "テスト失敗";
   
   controller.freeInput();
   controller.press('@');
-  controller.release('w');
+  controller.release('W');
   controller.lockInput();
 
-  assert controller.released('w')
+  assert controller.released('W')
       && controller.down(SHIFT)
       && !controller.down('@')
       : "テスト失敗";
