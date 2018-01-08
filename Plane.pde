@@ -14,9 +14,6 @@ abstract class Plane{
 class Hero extends Plane{
   Hero(float x, float y, float r){
     super(x, y, r);
-    print(x);
-    print(y);
-    print(r);
   }
   
   void update(){
