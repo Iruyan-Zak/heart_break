@@ -6,6 +6,7 @@ void setup(){
   size(800, 600);
   
   initialize();
+  runTest();
 }
 
 void draw(){
@@ -27,4 +28,9 @@ void drawGame(){
 }
 
 void keyPressed(){
+}
+
+
+void runTest(){
+  controllerTest();
 }
