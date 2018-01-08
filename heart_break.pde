@@ -10,8 +10,10 @@ void setup(){
 }
 
 void draw(){
+  controller.lockInput();
   updateGame();
   drawGame();
+  controller.freeInput();
 }
 
 void initialize(){
@@ -28,6 +30,11 @@ void drawGame(){
 }
 
 void keyPressed(){
+  controller.press(keyCode);
+}
+
+void keyReleased(){
+  controller.release(keyCode);
 }
 
 

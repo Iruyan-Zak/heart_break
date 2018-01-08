@@ -15,6 +15,10 @@ class ClientArea{
   
   int centerX(){ return x + w/2; }
   int centerY(){ return y + h/2; }
+  int leftEnd(){ return x; }
+  int rightEnd(){ return x + w; }
+  int topEnd(){ return y; }
+  int bottomEnd(){ return y + h; }
 }
 
 class Controller{

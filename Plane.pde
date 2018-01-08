@@ -12,12 +12,33 @@ abstract class Plane{
 }
 
 class Hero extends Plane{
+  float speed;
+  
   Hero(float x, float y, float r){
     super(x, y, r);
+    
+    speed = 2;
   }
   
   void update(){
+    move();
+  }
+  
+  private void move(){
+    float dx = 0, dy = 0;
+    if(controller.down('W')){ dy -= 1; }
+    if(controller.down('S')){ dy += 1; }
+    if(controller.down('A')){ dx -= 1; }
+    if(controller.down('D')){ dx += 1; }
+    if(controller.down(SHIFT)){ dx /= 2; dy /= 2; }
     
+    if(dx * dy != 0){ dx *= 0.707; dy *= 0.707; }
+    
+    x += dx * speed;
+    y += dy * speed;
+    
+    x = constrain(x, clientArea.leftEnd(), clientArea.rightEnd());
+    y = constrain(y, clientArea.topEnd(), clientArea.bottomEnd());
   }
   
   void draw(){
