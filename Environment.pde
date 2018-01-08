@@ -18,12 +18,12 @@ class ClientArea{
 }
 
 class Controller{
-  private int pressedKeys_bits = 0, releasedKeys_bits = 0, pressedKeys_locked_bits = 0, releasedKeys_locked_bits = 0;
+  private int pressedKeys_bits = 0, pressedKeys_locked_bits = 0, pressedKeys_previous_bits = 0;
   private boolean lock = false;
   private int[] keysTable = new int[128];
   
   Controller(char[] keys){
-    assert keys.length > 32 : "コントローラが扱えるキーは32個までです。";
+    assert keys.length <= 32 : "コントローラが扱えるキーは32個までです。";
 
     {
       int currentBit = 1;
@@ -41,16 +41,15 @@ class Controller{
   }
   
   void freeInput(){
-    pressedKeys_bits = releasedKeys_bits = 0;
+    pressedKeys_previous_bits = pressedKeys_bits;
     lock = false;
-    pressedKeys_bits |= pressedKeys_locked_bits;
-    releasedKeys_bits |= releasedKeys_locked_bits;
-    pressedKeys_locked_bits = releasedKeys_locked_bits = 0;
+    pressedKeys_bits ^= pressedKeys_locked_bits;
+    pressedKeys_locked_bits = 0;
   }
   
   void press(int c){
     if(lock){
-      pressedKeys_locked_bits |= keysTable[c];
+      pressedKeys_locked_bits ^= keysTable[c];
     } else {
       pressedKeys_bits |= keysTable[c];
     }
@@ -58,21 +57,31 @@ class Controller{
 
   void release(int c){
     if(lock){
-      releasedKeys_locked_bits |= keysTable[c];
+      pressedKeys_locked_bits ^= keysTable[c];
     } else {
-      releasedKeys_bits |= keysTable[c];
+      pressedKeys_bits &= ~keysTable[c];
     }
   }
   
+  private boolean _down(int c, int bits){
+    return (bits & keysTable[c]) != 0;
+  }
+  
+  boolean down(int c){
+    assert lock : "状態の取得はコントローラをロックしてから行ってください。";
+    
+    return _down(c, pressedKeys_bits);
+  }
+
   boolean pressed(int c){
     assert lock : "状態の取得はコントローラをロックしてから行ってください。";
     
-    return (pressedKeys_bits & keysTable[c]) != 0;
+    return _down(c, pressedKeys_bits) && !_down(c, pressedKeys_previous_bits);
   }
 
   boolean released(int c){
     assert lock : "状態の取得はコントローラをロックしてから行ってください。";
 
-    return (releasedKeys_bits & keysTable[c]) != 0;
+    return !_down(c, pressedKeys_bits) && _down(c, pressedKeys_previous_bits);
   }
 }
