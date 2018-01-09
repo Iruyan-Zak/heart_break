@@ -1,10 +1,12 @@
 Hero hero;
+PImage cockpit;
 
 void setup(){
   noStroke();
   smooth();
-  size(800, 600);
+  size(960, 540);
   
+  loadResources();
   initialize();
   runTest();
 }
@@ -27,6 +29,7 @@ void updateGame(){
 void drawGame(){
   background(255);
   hero.draw();
+  image(cockpit, 0, 0, 960, 540);
 }
 
 void keyPressed(){
@@ -35,6 +38,11 @@ void keyPressed(){
 
 void keyReleased(){
   controller.release(keyCode);
+}
+
+
+void loadResources(){
+  cockpit = loadImage("cockpit.png");  
 }
 
 

@@ -1,4 +1,4 @@
-ClientArea clientArea = new ClientArea(30, 30, 360, 540);
+ClientArea clientArea = new ClientArea(30, 30, 720, 480);
 Controller controller = new Controller(new char[]{'W', 'A', 'S', 'D', SHIFT});
 
 // ----- クラス定義 -----
