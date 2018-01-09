@@ -37,13 +37,13 @@ class Hero extends Plane{
     x += dx * speed;
     y += dy * speed;
     
-    x = constrain(x, clientArea.leftEnd(), clientArea.rightEnd());
-    y = constrain(y, clientArea.topEnd(), clientArea.bottomEnd());
+    x = constrain(x, clientArea.leftEnd() + r, clientArea.rightEnd() - r);
+    y = constrain(y, clientArea.topEnd() + r, clientArea.bottomEnd() - r);
   }
   
   void draw(){
     fill(140,140,210);
-    triangle(x, y-16, x+12, y+8, x-12, y+8);
+    // triangle(x, y-16, x+12, y+8, x-12, y+8);
     fill(255, 80, 80);
     ellipse(x, y, r, r);
   }

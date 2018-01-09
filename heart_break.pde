@@ -5,6 +5,7 @@ void setup(){
   noStroke();
   smooth();
   size(960, 540);
+  ellipseMode(RADIUS);
   
   loadResources();
   initialize();
