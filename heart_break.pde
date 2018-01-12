@@ -36,7 +36,7 @@ void drawGame(){
   hero.draw();
   manager.draw();
   
-  image(cockpit, 0, 0, 960, 540);
+  image(cockpit, 0, 0);
 }
 
 void keyPressed(){
@@ -49,7 +49,8 @@ void keyReleased(){
 
 
 void loadResources(){
-  cockpit = loadImage("cockpit.png");  
+  cockpit = loadImage("cockpit.png");
+  cockpit.resize(960, 540);
 }
 
 
