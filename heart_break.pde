@@ -1,4 +1,5 @@
 Hero hero;
+EnemyManager manager;
 PImage cockpit;
 
 void setup(){
@@ -21,15 +22,20 @@ void draw(){
 
 void initialize(){
   hero = new Hero(clientArea.centerX(), clientArea.centerY() + clientArea.h/2, 10);
+  manager = new EnemyManager(0.02, 0.1);
 }
 
 void updateGame(){
   hero.update();
+  manager.update();
 }
 
 void drawGame(){
   background(255);
+  
   hero.draw();
+  manager.draw();
+  
   image(cockpit, 0, 0, 960, 540);
 }
 

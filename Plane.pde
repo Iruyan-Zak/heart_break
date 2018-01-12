@@ -48,3 +48,78 @@ class Hero extends Plane{
     ellipse(x, y, r, r);
   }
 }
+
+class Enemy extends Plane{
+  float speedX, speedY;
+  
+  Enemy(float x, float y, float r){
+    super(x, y, r);
+    
+    speedX = -3;
+    speedY = 0;
+  }
+  
+  void update(){
+    x += speedX;
+    y += speedY;
+  }
+  
+  void draw(){
+    fill(0);
+    ellipse(x, y, r, r);
+  }
+}
+
+class EnemyManager{
+  private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+  
+  private float spawnAccel;
+  private float spawnDecel;
+  private float spawnGauge;
+
+  EnemyManager(float accel, float decel){
+    spawnGauge = 0;
+    
+    spawnAccel = accel;
+    spawnDecel = decel;
+  }
+  
+  private void spawn(){
+    if(random(1) < spawnGauge){
+      {
+        float er = random(5,40);
+        float ey = random(clientArea.topEnd() + er, clientArea.bottomEnd() - er);  
+        float ex = clientArea.rightEnd() + er;
+        enemies.add(new Enemy(ex, ey, er));
+      }
+      spawnGauge -= spawnDecel;
+    }
+    spawnGauge += spawnAccel;
+  } 
+  
+  private void vanish(){
+    // enemies.removeIf(e -> e.x + e.r < clientArea.leftEnd());
+    ArrayList<Enemy> removes = new ArrayList<Enemy>();
+    for(Enemy e : enemies){
+      if(e.x + e.r < clientArea.leftEnd()){
+        removes.add(e);
+      }
+    }
+    enemies.removeAll(removes);
+  }
+  
+  void update(){
+    for(Enemy e : enemies){
+      e.update();
+    }
+    
+    spawn();
+    vanish();
+  }
+  
+  void draw(){
+    for(Enemy e : enemies){
+      e.draw();
+    }
+  }
+}
