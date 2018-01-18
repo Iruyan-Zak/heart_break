@@ -1,6 +1,7 @@
 Hero hero;
 EnemyManager manager;
 PImage cockpit;
+PlayUI playUI;
 
 void setup(){
   noStroke();
@@ -23,6 +24,7 @@ void draw(){
 void initialize(){
   hero = new Hero(clientArea.centerX(), clientArea.centerY() + clientArea.h/2, 5);
   manager = new EnemyManager(0.01, 0.1);
+  playUI = new PlayUI();
 }
 
 void updateGame(){
@@ -37,6 +39,7 @@ void drawGame(){
   manager.draw();
   
   image(cockpit, 0, 0);
+  playUI.draw();
 }
 
 void keyPressed(){
