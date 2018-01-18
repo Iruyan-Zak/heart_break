@@ -1,4 +1,5 @@
 abstract class Plane{
+  int hp = 1;
   float x, y, r;
   
   Plane(float x, float y, float r){
@@ -9,6 +10,10 @@ abstract class Plane{
   
   abstract void update();
   abstract void draw();
+  
+  boolean collideWith(Plane other){
+    return sq(x - other.x) + sq(y - other.y) <= sq(r + other.r);
+  }
 }
 
 class Hero extends Plane{
@@ -17,6 +22,7 @@ class Hero extends Plane{
   Hero(float x, float y, float r){
     super(x, y, r);
     
+    hp = 1000;
     speed = 2;
   }
   
@@ -54,6 +60,8 @@ class Enemy extends Plane{
   
   Enemy(float x, float y, float r){
     super(x, y, r);
+
+    hp = 10;
     
     float v = random(2,5);
     float theta = random(PI/6) - PI/12;
@@ -103,7 +111,8 @@ class EnemyManager{
     // enemies.removeIf(e -> e.x + e.r < clientArea.leftEnd());
     ArrayList<Enemy> removes = new ArrayList<Enemy>();
     for(Enemy e : enemies){
-      if(e.x + e.r < clientArea.leftEnd()){
+      if(e.x + e.r < clientArea.leftEnd()
+        || e.hp <= 0){
         removes.add(e);
       }
     }
@@ -113,6 +122,10 @@ class EnemyManager{
   void update(){
     for(Enemy e : enemies){
       e.update();
+      if(e.collideWith(hero)){
+        e.hp = 0;
+        hero.hp -= 240 / e.r;
+      }
     }
     
     spawn();
