@@ -55,8 +55,10 @@ class Enemy extends Plane{
   Enemy(float x, float y, float r){
     super(x, y, r);
     
-    speedX = -3;
-    speedY = 0;
+    float v = random(2,5);
+    float theta = random(PI/6) - PI/12;
+    speedX = -v*cos(theta);
+    speedY = v*sin(theta);
   }
   
   void update(){
